@@ -61,3 +61,13 @@ public:
         update(0, 0, n - 1, pos, val);
     }
 };
+
+
+int main(){
+    vector<int> arr = {1,2,3,4,5};
+    SegmentTree seg(arr);
+    seg.rangeQuery(2,3);
+    seg.pointUpdate(2,5);
+    seg.rangeQuery(2,3);
+    return 0;
+}
