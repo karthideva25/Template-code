@@ -60,9 +60,11 @@ public:
     }
 
     long long query(int node, int start, int end, int l, int r) {
+        // no overlap start end || l r or l r || start end
         if (r < start || end < l)
             return 0;
 
+        // complete overlap l start end r
         if (l <= start && end <= r)
             return seg[node];
 
