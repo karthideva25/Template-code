@@ -1,31 +1,70 @@
-class Fenwick {
-    vector<int> bit;
+class FenwickTree{
+    vector<int> bit,arr;
     int n;
-
 public:
-    Fenwick(int n) {
-        this->n = n;
-        bit.assign(n + 1, 0);
+    FenwickTree(){}
+    FenwickTree(vector<int>& nums){
+        n = nums.size();
+        bit.resize(n+1,0);
+        arr = vector<int>(nums.begin(),nums.end());
+        build(arr);
     }
-
-    // Point update: add val at index i
-    void update(int i, int val) {
-        for (; i <= n; i += i & -i) {
-            bit[i] += val;
+    void update(int id, int val){
+        upd(id+1,-arr[id]);
+        arr[id] = val;
+        upd(id+1,arr[id]);
+    }
+    int rangeQuery(int l, int r){
+        if (l == 0){
+            return query(r+1);
+        }
+        return query(r+1) - query(l);
+    }
+    void print(){
+        for(int i=1;i<=n;i++){
+            cout << bit[i] << " ";
+        }
+        cout << endl;
+    }
+private:
+    void build(vector<int>& arr){
+        for(int i=0;i<n;i++){
+            upd(i+1,arr[i]);
         }
     }
-
-    // Prefix sum from 1 to i
-    int query(int i) {
+    // 1 to id sum will return
+    // always remember BIT is 1 Based
+    int query(int id){
         int sum = 0;
-        for (; i > 0; i -= i & -i) {
-            sum += bit[i];
+        while(id > 0){
+            sum += bit[id];
+            id -= (id & -id);
         }
         return sum;
     }
+    // always remember BIT is 1 Based
+    // starts with id and goes till n and add exponentially
+    void upd(int id, int val){
+        while(id <= n){
+            bit[id] += val;
+            id += (id & -id);
+        }
+    }
+};
 
-    // Range sum [l, r]
-    int rangeQuery(int l, int r) {
-        return query(r) - query(l - 1);
+class NumArray {
+    FenwickTree tree;
+public:
+    NumArray(vector<int>& nums) {
+        FenwickTree tre(nums);
+        this->tree = tre;
+    }
+    
+    void update(int index, int val) {
+        tree.update(index,val);
+    }
+    
+    int sumRange(int left, int right) {
+        return tree.rangeQuery(left,right);
     }
 };
