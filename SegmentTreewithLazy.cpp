@@ -39,9 +39,11 @@ public:
     }
 
     void rangeUpdate(int node, int start, int end, int l, int r, int val) {
+        // no overlap start end || l r or l r || start end
         if (r < start || end < l)
             return;
 
+        // complete overlap l start end r
         if (l <= start && end <= r) {
             seg[node] += (end - start + 1) * val;
             lazy[node] += val;
