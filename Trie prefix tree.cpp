@@ -13,7 +13,7 @@ class Trie{
     TrieNode* root;
 public:
     Trie(){
-        trie = new TrieNode();
+        root = new TrieNode();
     }
     void insert(string word){
         TrieNode* node = root;
