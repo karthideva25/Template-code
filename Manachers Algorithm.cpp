@@ -1,3 +1,5 @@
+// Reference : https://www.geeksforgeeks.org/dsa/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
+
 #include <iostream>
 #include <vector>
 #include <string>
